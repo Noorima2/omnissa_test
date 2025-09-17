@@ -5,7 +5,10 @@ auto_direction()
 top_language_menu()
 
 st.markdown('<img src="https://cdn-icons-png.flaticon.com/512/4712/4712038.png" class="big-logo">', unsafe_allow_html=True)
-
+st.info("""
+**تنبيه هام:**  
+هذه الواجهة عبارة عن نموذج أولي (Prototype) قيد التطوير، ولا تزال قيد الإضافة والتحسين لميزات متعددة. جميع الشاشات الحالية للعرض والمحاكاة فقط، ولا تمثل النظام النهائي أو وظائفه الفعلية.
+""")
 st.markdown("""
 <div class="card" style="margin-bottom: 12px;">
 <h1 style="text-align:center;" class="blue-title">نظام الملف الصحي الذكي</h1>
