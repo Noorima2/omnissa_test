@@ -9,7 +9,7 @@ auto_direction()
 top_language_menu()
 
 # ------ جلب المرضى ------
-response = requests.get("http://localhost:8000/all_patients")
+response = requests.get("https://omnissatest-production.up.railway.app/all_patients")
 patients = response.json() if response.status_code == 200 else []
 if not patients:
     st.info("لا يوجد مرضى حتى الآن.")
