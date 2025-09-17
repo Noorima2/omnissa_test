@@ -7,6 +7,15 @@ apply_global_style()
 auto_direction()
 top_language_menu()
 
+def fix_session_dict(key):
+    val = st.session_state.get(key)
+    if not isinstance(val, dict):
+        st.session_state[key] = {}
+    return st.session_state[key]
+
+for key in ["child_history", "nutrition_history", "immunization_history", "developmental_history","gyn_obs_saved"]:
+    fix_session_dict(key)
+
 st.markdown("""
 <div class="card" style="max-width:530px; margin:auto; margin-top:22px; text-align:center;">
     <h2 class="blue-title" style="margin-bottom:13px;color:#2551a3;"> بياناتي الأساسية</h2>
@@ -37,18 +46,14 @@ with st.expander("📝 الرجاء تعبئة بياناتك الأساسية",
     st.session_state["birthplace"] = birthplace
 
     marital_status = st.selectbox("الحالة الاجتماعية", ["","أعزب/عزباء", "متزوج/ة", "أرمل/ة", "مطلق/ة"], 
-                                index=0 if st.session_state.get("marital_status", "أعزب/عزباء") == "أعزب/عزباء" else 1 
-                                if st.session_state.get("marital_status", "أعزب/عزباء") == "متزوج/ة" else 2 
-                                if st.session_state.get("marital_status", "أعزب/عزباء") == "أرمل/ة" else 3)
+                                index=0 if st.session_state.get("marital_status", "أعزب/عزباء") == "أعزب/عزباء" else 1 )
     st.session_state["marital_status"] = marital_status
 
     occupation = st.text_input("المهنة", value=st.session_state.get("occupation", ""), help="مثال: طالب، موظف، ربة منزل...")
     st.session_state["occupation"] = occupation
 
     source_info = st.selectbox("من يقدم المعلومات؟", ["","المريض", "الأب", "الأم", "مرافق", "آخر"],
-                            index=0 if st.session_state.get("source_info", "المريض") == "المريض" else 1
-                            if st.session_state.get("source_info", "المريض") == "الأب" else 2
-                            if st.session_state.get("source_info", "المريض") == "الأم" else 3)
+                            index=0 if st.session_state.get("source_info", "المريض") == "المريض" else 1)
     st.session_state["source_info"] = source_info
 
     date_of_visit = st.date_input("تاريخ الزيارة/الدخول", value=today)
@@ -68,16 +73,17 @@ family_saved = st.session_state.get("family_history", {})
 social_saved = st.session_state.get("social_history", {})
 child_saved = st.session_state.get("child_history", {})
 gyn_obs_saved = st.session_state.get("gyn_obs_history", {})
-
+child_saved = st.session_state.get("child_history", {})
+immun_saved = st.session_state.get("immunization_history", {})
+nutri_saved = st.session_state.get("nutrition_history", {})
+dev_saved = st.session_state.get("developmental_history", {})
 # معايير
-# احسب تصنيف العمر والجندر
 age = st.session_state.get("age",0)
 gender = st.session_state.get("gender", "")
 is_child = age < 15
 is_female = gender == "أنثى"
 is_adult_female = is_female and age >= 8
 is_adult_male = gender == "ذكر" and age >= 15
-
 #==========================التاريخ المرضي=================================================
 with st.expander("🩺 التاريخ المرضي السابق", expanded=False):
     chronic_diseases = st.radio(
@@ -175,6 +181,14 @@ with st.expander(" 👨‍👩‍👧‍👦  التاريخ العائلي", ex
                              index=["لا", "نعم"].index(family_saved.get("consanguinity", "لا")), key="consang")
     same_case = st.radio("هل هناك حالات مشابهة في العائلة؟*", ["لا", "نعم"],
                              index=["لا", "نعم"].index(family_saved.get("same_case", "لا")), key="same_case")
+    similar_conditions=""
+    if same_case =="نعم":
+        similar_conditions= st.text_input(
+            "  يرجى ذكر تفاصيل حالات مشابهة في العائلة",
+            value=family_saved.get("similar_conditions",""),
+            key="similar_conditions"
+
+        )
     early_death = st.radio("هل هناك حالات وفيات مبكرة؟*", ["لا", "نعم"],
                              index=["لا", "نعم"].index(family_saved.get("early_death", "لا")), key="early_death")
     
@@ -230,13 +244,25 @@ all_required_filled = all([
 ])
 
 # ============ حذف الشروط: الحقول للأطفال والنساء تظهر دائماً أثناء التطوير ============
-child_saved = st.session_state.get("child_history", {})
-immun_saved = st.session_state.get("immunization_history", {})
-nutri_saved = st.session_state.get("nutrition_history", {})
-dev_saved = st.session_state.get("developmental_history", {})
-
+order_siblings = ""
+education_level = ""
+feeding_type = ""
+feeding_start = ""
+formula_name = ""
+nutri_saved = ""
+weaning = ""
+food_issues = ""
+immunization_complete = ""
+immunization_details = ""
+vaccination = ""
+development = ""
+walking_age = ""
+talking_age = ""
+school_performance = ""
+delay_signs = ""
 
 if is_child:
+
     with st.expander("🧒 جميع تفاصيل الطفل الصحية", expanded=False):
         st.markdown("#### 👨‍👩‍👦 معلومات عائلية وأكاديمية")
         order_siblings = st.text_input(
@@ -250,7 +276,7 @@ if is_child:
         st.session_state["education_level"] = education_level
         # 🍼 الرضاعة/التغذية
         st.markdown("#### 🍼 الرضاعة والتغذية")
-        feeding_type = st.selectbox(
+        feeding_type = st.radio(
             "نوع الرضاعة في أول سنة", ["","طبيعية فقط", "صناعية فقط", "مختلط"],
             index=["طبيعية فقط", "صناعية فقط", "مختلط"].index(nutri_saved.get("feeding_type", "طبيعية فقط")), key="feed_type"
         )
@@ -304,7 +330,19 @@ if is_child:
         "هل توجد أي علامات تأخر في التطور الحركي أو العقلي؟", value=dev_saved.get("delay_signs", ""), key="delay_signs"
     )
 
-# ==========================للنساء: تظهر دائماً أثناء التطوير==========================
+# ========================للنساء==========================
+
+lmp_input_method=""
+lmp=""
+menarche_ages=""
+menarche =""
+cycle_pattern=""
+pregnancies=""
+deliveries=""
+abortions=""
+contraception=""
+contraception_details=""
+
 if is_adult_female:
     with st.expander("🤱 تاريخ نسائي وولادة", expanded=False):
         lmp_input_method = st.radio(
@@ -361,7 +399,7 @@ if is_adult_female:
                 key="contraception_details"
             )
 
-#==============================الازرار=====================================
+#==============================الازرار=======================
 st.markdown("""
 <style>
 /* زر أزرق لجميع أزرار st.button تلقائيا داخل كارد */
