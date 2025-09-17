@@ -151,7 +151,7 @@ with col1:
         # ============== الإرسال =================
         try:
             if not st.session_state.get("patient_saved", False):
-                res = requests.post("http://localhost:8000/add_patient", json=patient_data)
+                res = requests.post("https://omnissatest-production.up.railway.app/add_patient", json=patient_data)
                 if res.status_code == 200:
                     st.session_state["patient_saved"] = True
                     st.session_state["success_message"] = "✅ تم استلام طلبك بنجاح\n\nتم إرسال جميع بياناتك للطبيب المختص.\nسيتم مراجعة حالتك قريبًا وسيتم التواصل معك إذا لزم الأمر.\nنتمنى لك الشفاء العاجل! إذا ظهرت لديك أعراض جديدة أو ازداد الألم بشكل كبير، لا تتردد في مراجعة الطوارئ."
