@@ -155,7 +155,7 @@ with col2:
     # ---- 1. ملخص Gemini AI ----
     if st.button("توليد ملخص طبي", key="doctor_ai_btn"):
         with st.spinner("جاري توليد الملخص الذكي..."):
-            api_url = "http://localhost:8000/doctor_ai_summary"
+            api_url = "https://omnissatest-production.up.railway.app/doctor_ai_summary"
             response = requests.post(api_url, json={
                 "patient_data": json.dumps(patient, ensure_ascii=False),
                 "lang": st.session_state.get("lang", "ar")
@@ -186,7 +186,7 @@ with col2:
     icd_query = st.text_input("ابحث عن تشخيص تفريقي (يمكنك استخدام الشكوى أو تعديلها):", value=patient.get("chief_complaint", ""), key="icd_query")
     if st.button("ابحث في ICD-11", key="icd11_btn"):
         with st.spinner("يتم جلب اقتراحات التشخيص..."):
-            api_url = "http://localhost:8000/icd11_search"
+            api_url = "https://omnissatest-production.up.railway.app/icd11_search"
             resp = requests.post(api_url, json={"query": icd_query, "lang": "en"})
             try:
                 data = resp.json()
@@ -251,7 +251,7 @@ with col2:
     if st.button("حفظ التشخيص النهائي والخطة", key="save_status_btn"):
         patient_id = patient.get("id")
         if patient_id:
-            url = f"http://localhost:8000/update_patient/{patient_id}"
+            url = f"https://omnissatest-production.up.railway.app/update_patient/{patient_id}"
             updated_patient = patient.copy()
             updated_patient.update({
                 "diagnosis_final": diagnosis_final,
