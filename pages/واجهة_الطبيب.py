@@ -8,6 +8,10 @@ apply_global_style()
 auto_direction()
 top_language_menu()
 
+st.info("""
+**تنبيه هام:**  
+هذه الواجهة عبارة عن نموذج أولي (Prototype) قيد التطوير، ولا تزال قيد الإضافة والتحسين لميزات متعددة. جميع الشاشات الحالية للعرض والمحاكاة فقط، ولا تمثل النظام النهائي أو وظائفه الفعلية.
+""")
 # ------ جلب المرضى ------
 response = requests.get("https://omnissatest-production.up.railway.app/all_patients")
 patients = response.json() if response.status_code == 200 else []
