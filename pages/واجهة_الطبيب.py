@@ -159,29 +159,8 @@ with col2:
         else:
             st.info("لا توجد بيانات مفصلة عن التاريخ المرضي السابق.")
 
-        # # --- عرض Family History ---
-        st.markdown("#### B.التاريخ العائلي (Family History)")
-        chronic_diseases_family = patient.get(" chronic_diseases_family",[])
-        similar_conditions = patient.get("similar_conditions",[])
-        consanguinity = patient.get("consanguinity",[])
-        if  chronic_diseases_family or similar_conditions or consanguinity:
-            family_html = """
-            <table style="background:#f9fafd;width:97%;border-radius:7px;">
-                <tr><td style='font-weight:600'>أمراض مزمنة بالعائلة</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'> أمراض مشابهة بالعائلة</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>درجة القرابة</td><td>{}</td></tr>
-            </table>
-            """.format(
-                "، ".join(chronic_diseases_family) if chronic_diseases_family else "---",
-                "، ".join(similar_conditions) if similar_conditions else "---",
-                "، ".join(consanguinity) if consanguinity else "---",
-            )
-            st.markdown(past_html, unsafe_allow_html=True)
-        else:
-            st.info("لا توجد بيانات مفصلة عن التاريخ العائلي.")
-
         # --- عرض Socioeconomic History ---
-        st.markdown("#### C.التاريخ الاجتماعي (Socioeconomic History)")
+        st.markdown("#### B.التاريخ الاجتماعي (Socioeconomic History)")
         stimulants = patient.get("stimulants ",[])
         alcohol = patient.get("alcohol",[])
         housing = patient.get("housing",[])
