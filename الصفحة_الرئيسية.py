@@ -27,6 +27,7 @@ st.markdown("""
     نظام رقمي ذكي يرافقك في كل خطوة لرصد وحفظ بياناتك الصحية بتجربة عربية حديثة وسهلة.
     </div>
   </div>
+  ---
   <div class="info-card">
     <h4 style="color:#2551a3;">⚡ مميزات أساسية</h4>
     <ul style="font-size:16px; margin-bottom:2px;">
