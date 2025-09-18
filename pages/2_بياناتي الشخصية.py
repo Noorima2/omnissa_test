@@ -275,26 +275,26 @@ if is_child:
         st.markdown("---")
         st.session_state["education_level"] = education_level
         # 🍼 الرضاعة/التغذية
-        st.markdown("#### 🍼 الرضاعة والتغذية")
-        feeding_type = st.radio(
-            "نوع الرضاعة في أول سنة", ["","طبيعية فقط", "صناعية فقط", "مختلط"],
-            index=["طبيعية فقط", "صناعية فقط", "مختلط"].index(nutri_saved.get("feeding_type", "طبيعية فقط")), key="feed_type"
-        )
-        feeding_start = st.text_input(
-            "متى بدأت الرضاعة؟", value=nutri_saved.get("feeding_start", ""), key="feed_start"
-        )
-        formula_name = ""
-        if feeding_type != "طبيعية فقط":
-            formula_name = st.text_input(
-                "ما اسم الحليب الصناعي المستخدم؟", value=nutri_saved.get("formula_name", ""), key="form_name"
-            )
-        weaning = st.text_input(
-            "متى بدأ الفطام؟ (إدخال أطعمة صلبة)", value=nutri_saved.get("weaning", ""), key="weaning"
-        )
-        food_issues = st.text_area(
-            "هل يوجد مشاكل في الشهية أو رفض أطعمة معينة أو ترجيع أو إسهال مزمن أو إمساك مزمن؟",
-            value=nutri_saved.get("food_issues", ""), key="food_issues"
-        )
+        # st.markdown("#### 🍼 الرضاعة والتغذية")
+        # feeding_type = st.radio(
+        #     "نوع الرضاعة في أول سنة", ["","طبيعية فقط", "صناعية فقط", "مختلط"],
+        #     index=["طبيعية فقط", "صناعية فقط", "مختلط"].index(nutri_saved.get("feeding_type", "طبيعية فقط")), key="feed_type"
+        # )
+        # feeding_start = st.text_input(
+        #     "متى بدأت الرضاعة؟", value=nutri_saved.get("feeding_start", ""), key="feed_start"
+        # )
+        # formula_name = ""
+        # if feeding_type != "طبيعية فقط":
+        #     formula_name = st.text_input(
+        #         "ما اسم الحليب الصناعي المستخدم؟", value=nutri_saved.get("formula_name", ""), key="form_name"
+        #     )
+        # weaning = st.text_input(
+        #     "متى بدأ الفطام؟ (إدخال أطعمة صلبة)", value=nutri_saved.get("weaning", ""), key="weaning"
+        # )
+        # food_issues = st.text_area(
+        #     "هل يوجد مشاكل في الشهية أو رفض أطعمة معينة أو ترجيع أو إسهال مزمن أو إمساك مزمن؟",
+        #     value=nutri_saved.get("food_issues", ""), key="food_issues"
+        # )
 
         st.markdown("---")
         # 💉 التطعيمات
