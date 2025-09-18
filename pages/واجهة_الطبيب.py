@@ -133,39 +133,16 @@ with col2:
         st.markdown("### 3.التاريخ المرضي والاجتماعي والعائلي")
         # --- عرض Past History بشكل منسق ---
         st.markdown("#### A.التاريخ المرضي السابق (Past History)")
-        chronic_diseases = patient.get("chronic_diseases", [])
-        surgeries = patient.get("surgeries", [])
-        previous_admissions = patient.get("previous_admissions", [])
-        allergies = patient.get("allergies", [])
-        medications = patient.get("medications", [])
 
-        if chronic_diseases or surgeries or previous_admissions or allergies or medications:
-            past_html = """
-            <table style="background:#f9fafd;width:97%;border-radius:7px;">
-                <tr><td style='font-weight:600'>الأمراض المزمنة</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>جراحات سابقة</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>نقل دم</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>حساسية</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>أدوية حالية</td><td>{}</td></tr>
-            </table>
-            """.format(
-                "، ".join(chronic_diseases) if chronic_diseases else "---",
-                "، ".join(surgeries) if surgeries else "---",
-                "، ".join(previous_admissions) if previous_admissions else "---",
-                "، ".join(allergies) if allergies else "---",
-                "، ".join(medications) if medications else "---"
-            )
-            st.markdown(past_html, unsafe_allow_html=True)
-        else:
-            st.info("لا توجد بيانات مفصلة عن التاريخ المرضي السابق.")
-
+        
         # --- عرض Socioeconomic History ---
         st.markdown("#### B.التاريخ الاجتماعي (Socioeconomic History)")
-        stimulants = patient.get("stimulants ",[])
-        alcohol = patient.get("alcohol",[])
-        housing = patient.get("housing",[])
-        pets= patient.get("pets",[])
-        travel= patient.get("travel",[])
+       smoking = patient.get("smoking", False)
+        stimulants = patient.get("stimulants", [])
+        alcohol = patient.get("alcohol", False)
+        housing = patient.get("housing", "---")
+        pets = patient.get("pets", [])
+        travel = patient.get("travel", False)
 
         if  stimulants or alcohol or housing or pets or travel:
             socio_html = """
@@ -176,16 +153,19 @@ with col2:
                 <tr><td style='font-weight:600'>الحيوانات الاليفة</td><td>{}</td></tr>
                 <tr><td style='font-weight:600'>تاريخ السفر</td><td>{}</td></tr>
             </table>
-            """.format(
+            """.format(  
+               "نعم" if smoking else "لا",
                 "، ".join(stimulants) if stimulants else "---",
-                "، ".join(alcohol) if alcohol else "---",
-                "، ".join(housing) if housing else "---",
+                "نعم" if alcohol else "لا",
+                housing,
                 "، ".join(pets) if pets else "---",
-                "، ".join(travel) if travel else "---",     
+                "نعم" if travel else "لا"   
             )
             st.markdown(socio_html, unsafe_allow_html=True)
         else:
             st.info("لا توجد بيانات مفصلة عن التاريخ الاجتماعي.")
+
+    
 
         st.markdown("### 4. مراجعة الأنظمة (ROS)")
         ros = patient.get("ros", {})
