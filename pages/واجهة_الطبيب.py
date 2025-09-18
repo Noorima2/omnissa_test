@@ -144,7 +144,7 @@ with col2:
         pets = patient.get("pets", [])
         travel = patient.get("travel", False)
 
-        if  stimulants or alcohol or housing or pets or travel:
+        if  smoking or stimulants or alcohol or housing or pets or travel:
             socio_html = """
             <table style="background:#f9fafd;width:97%;border-radius:7px;">
                 <tr><td style='font-weight:600'>مواد منشطة</td><td>{}</td></tr>
