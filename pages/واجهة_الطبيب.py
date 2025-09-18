@@ -137,35 +137,6 @@ with col2:
         
         # --- عرض Socioeconomic History ---
         st.markdown("#### B.التاريخ الاجتماعي (Socioeconomic History)")
-       smoking = patient.get("smoking", False)
-        stimulants = patient.get("stimulants", [])
-        alcohol = patient.get("alcohol", False)
-        housing = patient.get("housing", "---")
-        pets = patient.get("pets", [])
-        travel = patient.get("travel", False)
-
-        if  smoking or stimulants or alcohol or housing or pets or travel:
-            socio_html = """
-            <table style="background:#f9fafd;width:97%;border-radius:7px;">
-                <tr><td style='font-weight:600'>مواد منشطة</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>تعاطي المخدرات او الكحول</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>ظروف السكن</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>الحيوانات الاليفة</td><td>{}</td></tr>
-                <tr><td style='font-weight:600'>تاريخ السفر</td><td>{}</td></tr>
-            </table>
-            """.format(  
-               "نعم" if smoking else "لا",
-                "، ".join(stimulants) if stimulants else "---",
-                "نعم" if alcohol else "لا",
-                housing,
-                "، ".join(pets) if pets else "---",
-                "نعم" if travel else "لا"   
-            )
-            st.markdown(socio_html, unsafe_allow_html=True)
-        else:
-            st.info("لا توجد بيانات مفصلة عن التاريخ الاجتماعي.")
-
-    
 
         st.markdown("### 4. مراجعة الأنظمة (ROS)")
         ros = patient.get("ros", {})
