@@ -130,14 +130,6 @@ with col2:
             st.info("لا توجد بيانات مفصلة عن HOPI.")
 
         st.markdown("---")
-        st.markdown("### 3.التاريخ المرضي والاجتماعي والعائلي")
-        # --- عرض Past History بشكل منسق ---
-        st.markdown("#### A.التاريخ المرضي السابق (Past History)")
-
-        
-        # --- عرض Socioeconomic History ---
-        st.markdown("#### B.التاريخ الاجتماعي (Socioeconomic History)")
-
         st.markdown("### 4. مراجعة الأنظمة (ROS)")
         ros = patient.get("ros", {})
         if ros and isinstance(ros, dict):
