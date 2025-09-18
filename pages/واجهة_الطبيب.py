@@ -188,6 +188,9 @@ with col2:
         st.session_state['icd_results'] = []
 
     icd_query = st.text_input("ابحث عن تشخيص تفريقي (يمكنك استخدام الشكوى أو تعديلها):", value=patient.get("chief_complaint", ""), key="icd_query")
+    st.markdown("""تنبيه: اكتب اسم العرض باللغة الانجليزية. مثل
+                    سعال= cough, 
+                    الم في الصدر = chest pain ..الخ""")
     if st.button("ابحث في ICD-11", key="icd11_btn"):
         with st.spinner("يتم جلب اقتراحات التشخيص..."):
             api_url = "https://omnissatest-production.up.railway.app/icd11_search"
