@@ -18,8 +18,8 @@ st.markdown("""
 </p>
 </div>
 """, unsafe_allow_html=True)
+st.markdown("---")
 
-# بطاقات موازية (بدون expander) للتعريف والمزايا وآلية العمل
 st.markdown("""
   <div class="info-card">
     <h4 style="color:#2551a3;">📋 تعريف النظام</h4>
