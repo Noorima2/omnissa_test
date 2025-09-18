@@ -182,14 +182,14 @@ with col2:
 
         # --- عرض Socioeconomic History ---
         st.markdown("#### C.التاريخ الاجتماعي (Socioeconomic History)")
-        smoking = patient.get("smoking",[])
+        # smoking = patient.get("smoking",[])
         stimulants = patient.get("stimulants ",[])
         alcohol = patient.get("alcohol",[])
         housing = patient.get("housing",[])
         pets= patient.get("pets",[])
         travel= patient.get("travel",[])
 
-        if smoking or stimulants or alcohol or housing or pets or travel:
+        if  stimulants or alcohol or housing or pets or travel:
             socio_html = """
             <table style="background:#f9fafd;width:97%;border-radius:7px;">
                 <tr><td style='font-weight:600'>التدخين</td><td>{}</td></tr>
@@ -200,7 +200,7 @@ with col2:
                 <tr><td style='font-weight:600'>تاريخ السفر</td><td>{}</td></tr>
             </table>
             """.format(
-                "، ".join(smoking) if smoking else "---",
+                # "، ".join(smoking) if smoking else "---",
                 "، ".join(stimulants) if stimulants else "---",
                 "، ".join(alcohol) if alcohol else "---",
                 "، ".join(housing) if housing else "---",
