@@ -21,7 +21,6 @@ st.markdown("""
 
 # بطاقات موازية (بدون expander) للتعريف والمزايا وآلية العمل
 st.markdown("""
-<div class="cards-row">
   <div class="info-card">
     <h4 style="color:#2551a3;">📋 تعريف النظام</h4>
     <div style="font-size:17px;">
@@ -46,7 +45,6 @@ st.markdown("""
     4. عدّل أي خطوة متى شئت بسهولة
     </div>
   </div>
-</div>
 """, unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns([1,2,1])
