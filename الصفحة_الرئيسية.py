@@ -21,6 +21,7 @@ st.markdown("""
 st.markdown("---")
 
 st.markdown("""
+# <div class="cards-row">
   <div class="info-card">
     <h4 style="color:#2551a3;">📋 تعريف النظام</h4>
     <div style="font-size:17px;">
@@ -46,6 +47,7 @@ st.markdown("""
     3. راجع ملخصك الصحي الشامل<br>
     4. عدّل أي خطوة متى شئت بسهولة
     </div>
+  </div>
   </div>
 """, unsafe_allow_html=True)
 
