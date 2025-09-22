@@ -132,10 +132,10 @@ with col1:
 
             # Social
             "smoking": safe_bool(social.get("smoking", "لا")),
-            "qat": safe_bool(social.get("qat", "لا")),
+            "stimulants": safe_list(social.get("qat", "")),  # أو أي حقول أخرى للمنبهات
             "alcohol": safe_bool(social.get("alcohol", "لا")),
             "housing": social.get("housing", ""),
-            "pets": safe_bool(social.get("pets", "لا")),
+            "pets": safe_list(social.get("pets", "")),  # يجب أن يكون list of str
             "travel": safe_bool(social.get("travel", "لا")),
 
             # Optional/children/gyn
@@ -151,7 +151,7 @@ with col1:
         # ============== الإرسال =================
         try:
             if not st.session_state.get("patient_saved", False):
-                res = requests.post("https://omnissatest-production.up.railway.app/add_patient", json=patient_data)
+                res = requests.post("https://omnissatest-production.up.railway.app/add_patient", json=patient_data,verify=False)
                 if res.status_code == 200:
                     st.session_state["patient_saved"] = True
                     st.session_state["success_message"] = "✅ تم استلام طلبك بنجاح\n\nتم إرسال جميع بياناتك للطبيب المختص.\nسيتم مراجعة حالتك قريبًا وسيتم التواصل معك إذا لزم الأمر.\nنتمنى لك الشفاء العاجل! إذا ظهرت لديك أعراض جديدة أو ازداد الألم بشكل كبير، لا تتردد في مراجعة الطوارئ."
