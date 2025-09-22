@@ -102,8 +102,19 @@ cards_html += card_html("بياناتك الأساسية", personal, "👤")
 cards_html += card_html("التاريخ المرضي السابق", past, "🩺")
 cards_html += card_html("التاريخ العائلي", family, "👨‍👩‍👦")
 cards_html += card_html("التاريخ الاجتماعي", social, "🏡")
-cards_html += card_html("بيانات الطفل", child, "🧒")
-cards_html += card_html("بيانات نسائية وولادة", gyn_obs, "🤱")
+gender = personal.get("gender", "")
+age = personal.get("age", 0)
+try:
+    age = int(age)
+except:
+    age = 0
+
+if age < 15:
+    cards_html += card_html("بيانات الطفل", child, "🧒")
+
+if gender in ["أنثى"]:
+    is_adult_female = gender and age >= 8
+    cards_html += card_html("بيانات نسائية وولادة", gyn_obs, "🤱")
 
 # --- كارد خاص بالتشخيصات والزيارات ---
 if visits:
