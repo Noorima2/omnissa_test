@@ -132,10 +132,10 @@ with col1:
 
             # Social
             "smoking": safe_bool(social.get("smoking", "لا")),
-            "stimulants": safe_list(social.get("qat", "")),  # أو أي حقول أخرى للمنبهات
+            "stimulants": safe_list(social.get("qat", "")),  
             "alcohol": safe_bool(social.get("alcohol", "لا")),
             "housing": social.get("housing", ""),
-            "pets": safe_list(social.get("pets", "")),  # يجب أن يكون list of str
+            "pets": safe_list(social.get("pets", "")),
             "travel": safe_bool(social.get("travel", "لا")),
 
             # Optional/children/gyn
