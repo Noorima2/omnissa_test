@@ -276,32 +276,56 @@ if is_child:
         st.session_state["education_level"] = education_level
         # 🍼 الرضاعة/التغذية
         st.markdown("#### 🍼 الرضاعة والتغذية")
-        # feeding_type = st.radio(
-        #     "نوع الرضاعة في أول سنة", ["","طبيعية فقط", "صناعية فقط", "مختلط"],
-        #     index=["طبيعية فقط", "صناعية فقط", "مختلط"].index(nutri_saved.get("feeding_type", "طبيعية فقط")), key="feed_type"
-        # )
-        # feeding_start = st.text_input(
-        #     "متى بدأت الرضاعة؟", value=nutri_saved.get("feeding_start", ""), key="feed_start"
-        # )
-        # formula_name = ""
-        # if feeding_type != "طبيعية فقط":
-        #     formula_name = st.text_input(
-        #         "ما اسم الحليب الصناعي المستخدم؟", value=nutri_saved.get("formula_name", ""), key="form_name"
-        #     )
-        # weaning = st.text_input(
-        #     "متى بدأ الفطام؟ (إدخال أطعمة صلبة)", value=nutri_saved.get("weaning", ""), key="weaning"
-        # )
-        # food_issues = st.text_area(
-        #     "هل يوجد مشاكل في الشهية أو رفض أطعمة معينة أو ترجيع أو إسهال مزمن أو إمساك مزمن؟",
-        #     value=nutri_saved.get("food_issues", ""), key="food_issues"
-        # )
+        def get_safe_dict(key):
+            val = st.session_state.get(key, {})
+            if not isinstance(val, dict):
+                return {}
+            return val
+
+        nutri_saved = get_safe_dict("nutrition_history")
+
+        feeding_types_list = ["طبيعية فقط", "صناعية فقط", "مختلط"]
+        feeding_type_val = nutri_saved.get("feeding_type", "")
+        index_val = 0
+        if feeding_type_val in feeding_types_list:
+            index_val = feeding_types_list.index(feeding_type_val)
+
+        feeding_type = st.radio(
+            "نوع الرضاعة في أول سنة", 
+            feeding_types_list,
+            index=index_val,
+            key="feed_type"
+        )
+        feeding_start = st.text_input(
+            "متى بدأت الرضاعة؟", value=nutri_saved.get("feeding_start", ""), key="feed_start"
+        )
+        formula_name = ""
+        if feeding_type != "طبيعية فقط":
+            formula_name = st.text_input(
+                "ما اسم الحليب الصناعي المستخدم؟", value=nutri_saved.get("formula_name", ""), key="form_name"
+            )
+        weaning = st.text_input(
+            "متى بدأ الفطام؟ (إدخال أطعمة صلبة)", value=nutri_saved.get("weaning", ""), key="weaning"
+        )
+        food_issues = st.text_area(
+            "هل يوجد مشاكل في الشهية أو رفض أطعمة معينة أو ترجيع أو إسهال مزمن أو إمساك مزمن؟",
+            value=nutri_saved.get("food_issues", ""), key="food_issues"
+        )
 
         st.markdown("---")
         # 💉 التطعيمات
         st.markdown("#### 💉 تاريخ التطعيمات")
+        options = ["نعم", "لا"]
+        selected_val = immun_saved.get("immunization_complete", "نعم")
+        if selected_val not in options:
+            selected_val = "نعم"
+        index_val = options.index(selected_val)
+
         immunization_complete = st.radio(
-            "هل التطعيمات كاملة حسب جدول وزارة الصحة؟", ["نعم", "لا"],
-            index=["نعم", "لا"].index(immun_saved.get("immunization_complete", "نعم")), key="immu_comp"
+            "هل التطعيمات كاملة حسب جدول وزارة الصحة؟",
+            options,
+            index=index_val,
+            key="immu_comp"
         )
         immunization_details = st.text_area(
             "يرجى ذكر التطعيمات التي تم أخذها أو التي تم تأجيلها أو نسيانها",
