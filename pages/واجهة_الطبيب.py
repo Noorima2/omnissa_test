@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import certifi
 import json
 from collections import defaultdict
 from utils import apply_global_style, top_language_menu, auto_direction
@@ -13,7 +14,9 @@ st.info("""
 هذه الواجهة عبارة عن نموذج أولي (Prototype) قيد التطوير، ولا تزال قيد الإضافة والتحسين لميزات متعددة. جميع الشاشات الحالية للعرض والمحاكاة فقط، ولا تمثل النظام النهائي أو وظائفه الفعلية.
 """)
 # ------ جلب المرضى ------
-response = requests.get("https://omnissatest-production.up.railway.app/all_patients")
+# response = requests.get("https://omnissatest-production.up.railway.app/all_patients")
+response = requests.get("https://omnissatest-production.up.railway.app/all_patients", verify=False)
+print(response.json())
 patients = response.json() if response.status_code == 200 else []
 if not patients:
     st.info("لا يوجد مرضى حتى الآن.")
@@ -163,8 +166,8 @@ with col2:
             api_url = "https://omnissatest-production.up.railway.app/doctor_ai_summary"
             response = requests.post(api_url, json={
                 "patient_data": json.dumps(patient, ensure_ascii=False),
-                "lang": st.session_state.get("lang", "ar")
-            })
+                "lang": st.session_state.get("lang", "ar"),
+            },verify=False)
             if response.status_code == 200:
                 doctor_ai_summary = response.json().get("doctor_ai_summary", "")
                 patient["doctor_ai_summary"] = doctor_ai_summary
@@ -195,7 +198,7 @@ with col2:
     if st.button("ابحث في ICD-11", key="icd11_btn"):
         with st.spinner("يتم جلب اقتراحات التشخيص..."):
             api_url = "https://omnissatest-production.up.railway.app/icd11_search"
-            resp = requests.post(api_url, json={"query": icd_query, "lang": "en"})
+            resp = requests.post(api_url, json={"query": icd_query, "lang": "en"},verify=False)
             try:
                 data = resp.json()
             except Exception:
