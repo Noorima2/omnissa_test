@@ -45,15 +45,13 @@ with st.expander("📝 الرجاء تعبئة بياناتك الأساسية",
     birthplace = st.text_input("مكان الميلاد", value=st.session_state.get("birthplace", ""), help="مثال: المدينة، القرية، المستشفى...")
     st.session_state["birthplace"] = birthplace
 
-    marital_status = st.selectbox("الحالة الاجتماعية", ["","أعزب/عزباء", "متزوج/ة", "أرمل/ة", "مطلق/ة"], 
-                                index=0 if st.session_state.get("marital_status", "أعزب/عزباء") == "أعزب/عزباء" else 1 )
+    marital_status = st.selectbox("الحالة الاجتماعية", ["","أعزب/عزباء", "متزوج/ة", "أرمل/ة", "مطلق/ة"])
     st.session_state["marital_status"] = marital_status
 
     occupation = st.text_input("المهنة", value=st.session_state.get("occupation", ""), help="مثال: طالب، موظف، ربة منزل...")
     st.session_state["occupation"] = occupation
 
-    source_info = st.selectbox("من يقدم المعلومات؟", ["","المريض", "الأب", "الأم", "مرافق", "آخر"],
-                            index=0 if st.session_state.get("source_info", "المريض") == "المريض" else 1)
+    source_info = st.selectbox("من يقدم المعلومات؟", ["","المريض", "الأب", "الأم", "مرافق", "آخر"])
     st.session_state["source_info"] = source_info
 
     date_of_visit = st.date_input("تاريخ الزيارة/الدخول", value=today)
