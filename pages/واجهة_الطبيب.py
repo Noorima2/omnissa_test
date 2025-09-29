@@ -165,12 +165,12 @@ with col2:
 
         # --- عرض Socioeconomic History ---
         st.markdown("#### B.التاريخ الاجتماعي (Socioeconomic History)")
-        smoking = patient.get("smoking",[])
-        stimulants = patient.get("stimulants ",[])
-        alcohol = patient.get("alcohol",[])
-        housing = patient.get("housing",[])
-        pets= patient.get("pets",[])
-        travel= patient.get("travel",[])
+        smoking = patient.get("smoking", None)  # bool
+        stimulants = patient.get("stimulants", [])  # list
+        alcohol = patient.get("alcohol", None)  # bool
+        housing = patient.get("housing", "")  # string أو None
+        pets = patient.get("pets", [])  # list
+        travel = patient.get("travel", None)  # bool
 
         if smoking or stimulants or alcohol or housing or pets or travel:
             socio_html = """
@@ -183,16 +183,17 @@ with col2:
                 <tr><td style='font-weight:600'>تاريخ السفر</td><td>{}</td></tr>
             </table>
             """.format(
-                "، ".join(smoking) if smoking else "---",
+                "نعم" if smoking else ("لا" if smoking is not None else "---"),
                 "، ".join(stimulants) if stimulants else "---",
-                "، ".join(alcohol) if alcohol else "---",
-                "، ".join(housing) if housing else "---",
+                "نعم" if alcohol else ("لا" if alcohol is not None else "---"),
+                housing if housing else "---",
                 "، ".join(pets) if pets else "---",
-                "، ".join(travel) if travel else "---",     
+                "نعم" if travel else ("لا" if travel is not None else "---"),
             )
             st.markdown(socio_html, unsafe_allow_html=True)
         else:
             st.info("لا توجد بيانات مفصلة عن التاريخ الاجتماعي.")
+
 
         st.markdown("#### C.التاريخ العائلي (Family History)")
         chronic_diseases_family = patient.get("chronic_diseases_family", [])
